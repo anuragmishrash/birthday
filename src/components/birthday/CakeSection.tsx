@@ -69,7 +69,10 @@ const Cake3D = ({ onSlice, sliced, blown, onBlow }: any) => {
 
   const handleClick = (e: any) => {
     e.stopPropagation();
-    if (blown) {
+    // On mobile, first click blows candles, second click slices
+    if (!blown) {
+      onBlow();
+    } else {
       onSlice();
     }
   };
@@ -245,7 +248,7 @@ const CakeSection = () => {
   return (
     <section className="py-20 px-4 relative">
       <motion.h2
-        className="text-5xl md:text-6xl font-display font-bold text-center mb-8 text-gradient"
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-center mb-6 md:mb-8 text-gradient px-4"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -255,15 +258,48 @@ const CakeSection = () => {
       </motion.h2>
 
       <motion.p
-        className="text-center text-lg text-muted-foreground mb-8"
+        className="text-center text-base sm:text-lg text-muted-foreground mb-4 px-4"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        {!blown ? 'Hover over the candles to blow them out!' : !sliced ? 'Now click the cake to slice it!' : 'Enjoy! 🎉'}
+        {!blown ? (
+          <>
+            <span className="hidden md:inline">Hover over the candles to blow them out!</span>
+            <span className="md:hidden">Tap the cake to blow the candles!</span>
+          </>
+        ) : !sliced ? (
+          'Now click the cake to slice it!'
+        ) : (
+          'Enjoy! 🎉'
+        )}
       </motion.p>
 
-      <div className="max-w-4xl mx-auto h-[600px] glass-card relative">
+      {/* Mobile-friendly buttons */}
+      <div className="flex justify-center gap-4 mb-4 md:hidden">
+        {!blown && (
+          <motion.button
+            className="magic-button text-sm px-6 py-3"
+            onClick={handleBlow}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Blow Candles 🕯️
+          </motion.button>
+        )}
+        {blown && !sliced && (
+          <motion.button
+            className="magic-button text-sm px-6 py-3"
+            onClick={handleSlice}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Slice Cake 🍰
+          </motion.button>
+        )}
+      </div>
+
+      <div className="max-w-4xl mx-auto h-[400px] sm:h-[500px] md:h-[600px] glass-card relative">
         <Canvas shadows>
           <PerspectiveCamera makeDefault position={[0, 2, 6]} />
           <OrbitControls 
@@ -331,13 +367,13 @@ const CakeSection = () => {
       {/* Birthday message */}
       {showMessage && (
         <motion.div
-          className="mt-8 glass-card max-w-2xl mx-auto text-center p-8"
+          className="mt-6 md:mt-8 glass-card max-w-2xl mx-auto text-center p-6 md:p-8"
           initial={{ opacity: 0, scale: 0.8, y: 50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <motion.h3
-            className="text-3xl font-display font-bold mb-4 text-gradient"
+            className="text-2xl sm:text-3xl font-display font-bold mb-3 md:mb-4 text-gradient"
             animate={{
               scale: [1, 1.05, 1],
             }}
@@ -349,7 +385,7 @@ const CakeSection = () => {
           >
             Happy Birthday, Shreyashi Pandey ❤️
           </motion.h3>
-          <p className="text-lg text-foreground">
+          <p className="text-base sm:text-lg text-foreground">
             You deserve all the happiness and love today and always.
           </p>
         </motion.div>

@@ -14,7 +14,7 @@ const WishBalloon = () => {
     <section className="py-20 px-4 relative min-h-screen flex items-center justify-center">
       <div className="text-center max-w-2xl mx-auto">
         <motion.h2
-          className="text-5xl md:text-6xl font-display font-bold mb-8 text-gradient"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 md:mb-8 text-gradient px-4"
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -24,12 +24,13 @@ const WishBalloon = () => {
         </motion.h2>
 
         <motion.p
-          className="text-lg text-muted-foreground mb-12"
+          className="text-base sm:text-lg text-muted-foreground mb-8 md:mb-12 px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          Drag the balloon and release it to send your wishes to the sky!
+          <span className="hidden sm:inline">Drag the balloon and release it to send your wishes to the sky!</span>
+          <span className="sm:hidden">Tap and drag the balloon upward!</span>
         </motion.p>
 
         <div className="relative h-96">
@@ -58,10 +59,10 @@ const WishBalloon = () => {
             <div className="relative inline-block">
               {/* Balloon */}
               <svg
-                width="150"
-                height="180"
+                width="120"
+                height="150"
                 viewBox="0 0 150 180"
-                className="drop-shadow-2xl"
+                className="drop-shadow-2xl sm:w-[150px] sm:h-[180px]"
               >
                 <defs>
                   <linearGradient id="balloonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -198,7 +199,7 @@ const WishBalloon = () => {
 
         {released && (
           <motion.p
-            className="text-2xl font-handwriting text-primary mt-8"
+            className="text-xl sm:text-2xl font-handwriting text-primary mt-6 md:mt-8 px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}

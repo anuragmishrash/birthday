@@ -204,7 +204,7 @@ const GiftBoxSection = () => {
   return (
     <section className="py-20 px-4 relative">
       <motion.h2
-        className="text-5xl md:text-6xl font-display font-bold text-center mb-8 text-gradient"
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-center mb-6 md:mb-8 text-gradient px-4"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -214,13 +214,27 @@ const GiftBoxSection = () => {
       </motion.h2>
 
       <motion.p
-        className="text-center text-lg text-muted-foreground mb-8"
+        className="text-center text-base sm:text-lg text-muted-foreground mb-4 px-4"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
       >
-        Click the gift box to open your surprise!
+        {!opened ? 'Click the gift box to open your surprise!' : 'Your special message! 💝'}
       </motion.p>
+
+      {/* Mobile-friendly button */}
+      {!opened && (
+        <div className="flex justify-center mb-4 md:hidden">
+          <motion.button
+            className="magic-button text-sm px-6 py-3"
+            onClick={handleOpen}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Open Gift 🎁
+          </motion.button>
+        </div>
+      )}
 
       <div className="max-w-4xl mx-auto h-[600px] glass-card relative">
         <Canvas shadows camera={{ position: [0, 2, 7], fov: 50 }}>
